@@ -3,17 +3,20 @@ package com.example.connect3game;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.GridLayout;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.gridlayout.widget.GridLayout;
 
 public class MainActivity extends AppCompatActivity {
     Boolean isYellow = true;
 
     String[] gameStateYellow = new String[10];//make 2 arrays for each player and save the state in each then think
     String[] gameStateRed = new String[10];
+    int[][] winningPosition={{0,3,6},{1,4,7},{3,5,9},{0,1,2},{3,4,5},{6,7,8},{0,4,8},{2,4,6}};
+
     int counterOfDice = 0;
 
     @Override
@@ -29,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
         counter.findViewById(R.id.imageView1);
 
         Log.i("tag", "" + counter.getTag());
-        //[0,3,6],[1,4,7],[3,5,9],[0,1,2],[3,4,5],[6,7,8],[0,4,8],[2,4,6]
+        //
 
         int tag = Integer.parseInt(counter.getTag().toString());
         System.out.println(tag);
@@ -37,9 +40,10 @@ public class MainActivity extends AppCompatActivity {
         if (counterOfDice == 9) {
             Toast.makeText(this, "Game Over!", Toast.LENGTH_SHORT).show();
             counterOfDice=0;
-            GridLayout gridLayout = null;
+            androidx.gridlayout.widget.GridLayout gridLayout =findViewById(R.id.gridLayout);
             for(int i=0;i<gridLayout.getChildCount();i++){
-                counter.setImageDrawable(null);
+                ImageView counter1= (ImageView) gridLayout.getChildAt(i);
+                counter1.setImageDrawable(null);
             }
         }
         else {
@@ -67,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
         ImageView counter = (ImageView) view;
         counter.setTranslationY(-1500);
         counter.setImageResource(R.drawable.yellow);
-        counter.animate().translationYBy(1500).setDuration(2000);
+        counter.animate().translationYBy(1500).setDuration(300);
     }
 
     public void drawRed(View view) {
@@ -75,6 +79,6 @@ public class MainActivity extends AppCompatActivity {
         ImageView counter = (ImageView) view;
         counter.setTranslationY(-1500);
         counter.setImageResource(R.drawable.red);
-        counter.animate().translationYBy(1500).setDuration(2000);
+        counter.animate().translationYBy(1500).setDuration(300);
     }
 }

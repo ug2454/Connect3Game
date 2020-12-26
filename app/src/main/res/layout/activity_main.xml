@@ -7,6 +7,7 @@
     tools:context=".MainActivity">
 
     <androidx.gridlayout.widget.GridLayout
+        android:id="@+id/gridLayout"
         android:layout_width="368dp"
         android:layout_height="368dp"
         android:layout_marginStart="8dp"
@@ -39,7 +40,7 @@
             android:layout_marginLeft="15dp"
 
             android:onClick="clickImage"
-            android:tag="1"/>
+            android:tag="1" />
 
         <ImageView
             android:id="@+id/imageView3"
@@ -47,32 +48,32 @@
             android:layout_height="100dp"
             android:layout_margin="10dp"
             android:layout_marginLeft="15dp"
-            android:tag="2"
-            android:onClick="clickImage" />
+            android:onClick="clickImage"
+            android:tag="2" />
 
         <ImageView
             android:id="@+id/imageView4"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_margin="10dp"
-            android:tag="3"
-            android:onClick="clickImage" />
+            android:onClick="clickImage"
+            android:tag="3" />
 
         <ImageView
             android:id="@+id/imageView5"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_margin="10dp"
-            android:tag="4"
-            android:onClick="clickImage" />
+            android:onClick="clickImage"
+            android:tag="4" />
 
         <ImageView
             android:id="@+id/imageView6"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_margin="10dp"
-            android:tag="5"
-            android:onClick="clickImage" />
+            android:onClick="clickImage"
+            android:tag="5" />
 
         <ImageView
             android:id="@+id/imageView7"
@@ -81,17 +82,17 @@
             android:layout_margin="10dp"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="20dp"
-            android:tag="6"
-            android:onClick="clickImage" />
+            android:onClick="clickImage"
+            android:tag="6" />
 
         <ImageView
             android:id="@+id/imageView8"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_margin="10dp"
-            android:tag="7"
             android:layout_marginTop="20dp"
-            android:onClick="clickImage" />
+            android:onClick="clickImage"
+            android:tag="7" />
 
         <ImageView
             android:id="@+id/imageView9"
@@ -99,8 +100,8 @@
             android:layout_height="100dp"
             android:layout_margin="10dp"
             android:layout_marginTop="20dp"
-            android:tag="9"
-            android:onClick="clickImage" />
+            android:onClick="clickImage"
+            android:tag="9" />
 
 
     </androidx.gridlayout.widget.GridLayout>
