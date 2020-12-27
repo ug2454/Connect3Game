@@ -3,26 +3,28 @@ package com.example.connect3game;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.GridView;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.gridlayout.widget.GridLayout;
 
 public class MainActivity extends AppCompatActivity {
     Boolean isYellow = true;
 
-    String[] gameStateYellow = new String[10];//make 2 arrays for each player and save the state in each then think
-    String[] gameStateRed = new String[10];
-    int[][] winningPosition={{0,3,6},{1,4,7},{3,5,9},{0,1,2},{3,4,5},{6,7,8},{0,4,8},{2,4,6}};
-
+    String[] gameStateYellow = {"null", "null", "null", "null", "null", "null", "null", "null", "null"};//make 2 arrays for each player and save the state in each then think
+    String[] gameStateRed = {"null", "null", "null", "null", "null", "null", "null", "null", "null"};
+    int[][] winningPosition = {{0, 3, 6}, {1, 4, 7}, {2, 5, 8}, {0, 1, 2}, {3, 4, 5}, {6, 7, 8}, {0, 4, 8}, {2, 4, 6}};
+    String message;
     int counterOfDice = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Button button = findViewById(R.id.button);
+        button.setVisibility(View.INVISIBLE);
     }
 
     public void clickImage(View view) {
@@ -35,35 +37,70 @@ public class MainActivity extends AppCompatActivity {
         //
 
         int tag = Integer.parseInt(counter.getTag().toString());
-        System.out.println(tag);
+//        System.out.println(tag);
 
-        if (counterOfDice == 9) {
-            Toast.makeText(this, "Game Over!", Toast.LENGTH_SHORT).show();
-            counterOfDice=0;
-            androidx.gridlayout.widget.GridLayout gridLayout =findViewById(R.id.gridLayout);
-            for(int i=0;i<gridLayout.getChildCount();i++){
-                ImageView counter1= (ImageView) gridLayout.getChildAt(i);
-                counter1.setImageDrawable(null);
-            }
-        }
-        else {
-            if (isYellow) {
-                gameStateYellow[tag] = "yellow";
-                drawYellow(view);
-                System.out.println(gameStateYellow[tag]);
 
-            } else {
-                gameStateRed[tag] = "red";
-                drawRed(view);
-                System.out.println(gameStateRed[tag]);
-            }
-            counterOfDice++;
+        if (isYellow) {
+            gameStateYellow[tag] = "yellow";
+            drawYellow(view);
+
+        } else {
+            gameStateRed[tag] = "red";
+            drawRed(view);
         }
 
+        counterOfDice++;
+        for (int[] winningPositions : winningPosition) {
+            if (gameStateYellow[winningPositions[0]].equals("yellow") && gameStateYellow[winningPositions[1]].equals("yellow") && gameStateYellow[winningPositions[2]].equals("yellow")) {
+                if (!isYellow) {
+                    message = "Yellow";
+                    Toast.makeText(this, message+" has won!", Toast.LENGTH_SHORT).show();
+                    enableButtonsAndTextView();
 
-        System.out.println(counterOfDice);
+
+                }
 
 
+            } else if (gameStateRed[winningPositions[0]].equals("red") && gameStateRed[winningPositions[1]].equals("red") && gameStateRed[winningPositions[2]].equals("red")) {
+                if (isYellow) {
+                    message = "Red";
+                    Toast.makeText(this, message+" has won!", Toast.LENGTH_SHORT).show();
+                    enableButtonsAndTextView();
+                }
+
+            }
+
+
+        }
+
+
+    }
+
+    public void enableButtonsAndTextView(){
+        TextView editText = findViewById(R.id.textView);
+        Button button = findViewById(R.id.button);
+        editText.setText(String.format("%s has won!", message));
+        editText.setVisibility(View.VISIBLE);
+        button.setVisibility(View.VISIBLE);
+    }
+
+    public void playAgain(View view) {
+
+
+        androidx.gridlayout.widget.GridLayout gridLayout = findViewById(R.id.gridLayout);
+        for (int i = 0; i < gridLayout.getChildCount(); i++) {
+            ImageView counter1 = (ImageView) gridLayout.getChildAt(i);
+            counter1.setImageDrawable(null);
+        }
+        TextView editText = findViewById(R.id.textView);
+        Button button = findViewById(R.id.button);
+        editText.setVisibility(View.INVISIBLE);
+        button.setVisibility(View.INVISIBLE);
+
+
+
+        gameStateYellow = new String[]{"null", "null", "null", "null", "null", "null", "null", "null", "null"};//make 2 arrays for each player and save the state in each then think
+        gameStateRed = new String[]{"null", "null", "null", "null", "null", "null", "null", "null", "null"};
     }
 
     public void drawYellow(View view) {
