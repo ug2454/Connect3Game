@@ -11,13 +11,14 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
-    Boolean isYellow = true;
+    boolean isYellow = true;
 
     String[] gameStateYellow = {"null", "null", "null", "null", "null", "null", "null", "null", "null"};//make 2 arrays for each player and save the state in each then think
     String[] gameStateRed = {"null", "null", "null", "null", "null", "null", "null", "null", "null"};
     int[][] winningPosition = {{0, 3, 6}, {1, 4, 7}, {2, 5, 8}, {0, 1, 2}, {3, 4, 5}, {6, 7, 8}, {0, 4, 8}, {2, 4, 6}};
     String message;
     int counterOfDice = 0;
+    boolean isGameActive=true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,47 +31,50 @@ public class MainActivity extends AppCompatActivity {
     public void clickImage(View view) {
         Log.i("Image", "Image selected");
         ImageView counter = (ImageView) view;
+        if(isGameActive) {
 
-        counter.findViewById(R.id.imageView1);
+            counter.findViewById(R.id.imageView1);
 
-        Log.i("tag", "" + counter.getTag());
-        //
+            Log.i("tag", "" + counter.getTag());
+            //
 
-        int tag = Integer.parseInt(counter.getTag().toString());
+            int tag = Integer.parseInt(counter.getTag().toString());
 //        System.out.println(tag);
 
 
-        if (isYellow) {
-            gameStateYellow[tag] = "yellow";
-            drawYellow(view);
+            if (isYellow) {
+                gameStateYellow[tag] = "yellow";
+                drawYellow(view);
 
-        } else {
-            gameStateRed[tag] = "red";
-            drawRed(view);
-        }
-
-        counterOfDice++;
-        for (int[] winningPositions : winningPosition) {
-            if (gameStateYellow[winningPositions[0]].equals("yellow") && gameStateYellow[winningPositions[1]].equals("yellow") && gameStateYellow[winningPositions[2]].equals("yellow")) {
-                if (!isYellow) {
-                    message = "Yellow";
-                    Toast.makeText(this, message+" has won!", Toast.LENGTH_SHORT).show();
-                    enableButtonsAndTextView();
-
-
-                }
-
-
-            } else if (gameStateRed[winningPositions[0]].equals("red") && gameStateRed[winningPositions[1]].equals("red") && gameStateRed[winningPositions[2]].equals("red")) {
-                if (isYellow) {
-                    message = "Red";
-                    Toast.makeText(this, message+" has won!", Toast.LENGTH_SHORT).show();
-                    enableButtonsAndTextView();
-                }
-
+            } else {
+                gameStateRed[tag] = "red";
+                drawRed(view);
             }
 
+            counterOfDice++;
+            for (int[] winningPositions : winningPosition) {
+                if (gameStateYellow[winningPositions[0]].equals("yellow") && gameStateYellow[winningPositions[1]].equals("yellow") && gameStateYellow[winningPositions[2]].equals("yellow")) {
+                    if (!isYellow) {
+                        message = "Yellow";
+                        Toast.makeText(this, message + " has won!", Toast.LENGTH_SHORT).show();
+                        enableButtonsAndTextView();
+                        isGameActive = false;
 
+                    }
+
+
+                } else if (gameStateRed[winningPositions[0]].equals("red") && gameStateRed[winningPositions[1]].equals("red") && gameStateRed[winningPositions[2]].equals("red")) {
+                    if (isYellow) {
+                        message = "Red";
+                        Toast.makeText(this, message + " has won!", Toast.LENGTH_SHORT).show();
+                        enableButtonsAndTextView();
+                        isGameActive = false;
+                    }
+
+                }
+
+
+            }
         }
 
 
@@ -101,6 +105,7 @@ public class MainActivity extends AppCompatActivity {
 
         gameStateYellow = new String[]{"null", "null", "null", "null", "null", "null", "null", "null", "null"};//make 2 arrays for each player and save the state in each then think
         gameStateRed = new String[]{"null", "null", "null", "null", "null", "null", "null", "null", "null"};
+        isGameActive=true;
     }
 
     public void drawYellow(View view) {
